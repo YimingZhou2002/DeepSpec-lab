@@ -38,6 +38,17 @@ CUDA_VISIBLE_DEVICES=2,3,4,5,6,7 python scripts/eval_subset.py <dataset> <limit>
 | [qwen3-4b-t1.md](qwen3-4b-t1.md) | Qwen3-4B / T=1.0 / 三模型 × 9 数据集（人读） |
 | [qwen3-4b-t1.json](qwen3-4b-t1.json) | 同上，机器可读，便于 diff |
 | [profiling.md](profiling.md) | 三模型单条输入的 **时间分配 + SM 利用率**（nsys 采集） |
+| [cost-model.md](cost-model.md) | **B 项结论**：bs=1 的成本由 kernel 发射次数决定，与 N/γ/batch 几乎无关 |
+| [feature-fidelity.md](feature-fidelity.md) | **A 项结论（否命题）**：特征保真度不能用作调度信号 |
+
+## 两条已下的结论（速览）
+
+1. **成本侧**（[cost-model.md](cost-model.md)）：verify 耗 128 倍 token 只多花 12-18%；
+   batch 1→64 耗时只多 0.7%；一次前向 2309 次 kernel 发射、平均 4.5 µs、**63% 是空隙**；
+   仅消除空隙就有 **2.71×**。γ 扫描三人全部显示：**约束 γ 的不是成本，是接受率塌缩。**
+2. **信号侧**（[feature-fidelity.md](feature-fidelity.md)）：困难数据（mt-bench）上，
+   连 DSpark 自己的置信度头都不能预测下一轮（p=0.30），特征保真度更不行。
+   ⇒ 「自适应调度推测深度」这一族的隐含假设在 bs=1 困难数据上不成立。
 
 ## 与论文的一致性（可信度证据）
 
