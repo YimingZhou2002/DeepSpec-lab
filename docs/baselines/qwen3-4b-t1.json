@@ -1,0 +1,41 @@
+{
+  "protocol": {
+    "target_model": "Qwen/Qwen3-4B",
+    "temperature": 1.0,
+    "max_new_tokens": 2048,
+    "seed": 980406,
+    "datasets": "eval.py defaults (9 tasks, 3030 prompts)",
+    "metric": "acceptance_length",
+    "hardware": "8x NVIDIA 97887MiB, CUDA 13.0, driver 580.159.04",
+    "software": "torch 2.11.0+cu130, transformers 5.10.2",
+    "deepspec_lab_commit": "005e03b",
+    "run_dates": ["2026-11-16T23:46+08:00", "2026-11-17T02:40+08:00"],
+    "note": "first 8 datasets used all 8 GPUs; arena-hard-v2 re-run on GPU 2-7 because GPU 0/1 were held by another job (vLLM, 83GB/card)"
+  },
+  "acceptance_length": {
+    "eagle3_qwen3_4b_ttt7": {
+      "gsm8k": 5.14, "math500": 4.58, "aime25": 3.87, "humaneval": 4.20,
+      "mbpp": 3.71, "livecodebench": 3.76, "mt-bench": 2.43, "alpaca": 2.26,
+      "arena-hard-v2": 2.54, "macro_avg": 3.610
+    },
+    "dflash_qwen3_4b_block7": {
+      "gsm8k": 5.38, "math500": 4.89, "aime25": 4.01, "humaneval": 4.74,
+      "mbpp": 4.38, "livecodebench": 4.22, "mt-bench": 3.03, "alpaca": 2.93,
+      "arena-hard-v2": 2.81, "macro_avg": 4.043
+    },
+    "dspark_qwen3_4b_block7": {
+      "gsm8k": 6.07, "math500": 5.74, "aime25": 4.94, "humaneval": 5.45,
+      "mbpp": 5.13, "livecodebench": 4.92, "mt-bench": 3.62, "alpaca": 3.52,
+      "arena-hard-v2": 3.30, "macro_avg": 4.743
+    }
+  },
+  "relative_gain_vs_eagle3": {
+    "dflash": 0.120,
+    "dspark": 0.314,
+    "paper_dspark_qwen3_4b": 0.309
+  },
+  "relative_gain_dspark_vs_dflash": {
+    "measured": 0.173,
+    "paper_dspark_qwen3_4b": 0.183
+  }
+}
